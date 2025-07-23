@@ -1,4 +1,6 @@
+import { encryptPassword } from '../utils/encryption';
 import { getconnection, mssql } from './ConnectionSqlServer';
+import {User} from '../models/user';
 
 // Función para obtener usuarios
 const getUser = async (): Promise<void> => {
@@ -19,11 +21,7 @@ const getUser = async (): Promise<void> => {
 
 // Función para agregar un usuario
 const AddUser = async (
-    email: string,
-    name: string,
-    LastName: string,
-  password: string,
-  IdRol: number
+   User: User
 ): Promise<void> => {
   try {
     const pool = await getconnection();
@@ -32,12 +30,13 @@ const AddUser = async (
       return;
     }
 
+    const hashedPassword = await encryptPassword(User.password)
     const result = await pool.request()
-      .input('email', mssql.VarChar, email)
-      .input('name', mssql.VarChar, name)
-      .input('LastName', mssql.VarChar, LastName) //
-      .input('passwordHash', mssql.VarChar, password)
-      .input('IdRol', mssql.Int, IdRol)
+      .input('email', mssql.VarChar,  User.email)
+      .input('name', mssql.VarChar, User.name)
+      .input('LastName', mssql.VarChar, User.lastName) //
+      .input('passwordHash', mssql.VarChar(100), hashedPassword)
+      .input('IdRol', mssql.Int, User.rol)
        .execute('dbo.spCrearUsuario');
 
     console.log(result);
@@ -48,7 +47,15 @@ const AddUser = async (
 };
 
 const main = async (): Promise<void> => {
-  await AddUser('user8@mail.com', 'charly', 'Flow', 'hash123', 1);
+  const newUser: User = {
+    email: 'user1@mail.com',
+    name: 'charly',
+    lastName: 'Flow',
+    password: 'hash123',
+    rol: 1
+  };
+  
+  await AddUser(newUser);
   await getUser();
 };
 
