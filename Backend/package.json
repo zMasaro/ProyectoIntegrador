@@ -11,7 +11,8 @@
     "build": "tsc",
     "start": "node dist/app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "sql": "ts-node-dev src/config/SqlServer.ts"
+    "sql": "ts-node-dev src/config/SqlServer.ts",
+    "test-tokens": "ts-node test/test-token-refresh.ts"
   },
   "dependencies": {
     "axios": "^1.10.0",
