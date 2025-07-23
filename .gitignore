@@ -174,3 +174,37 @@ junit.xml
 
 # Stylelint cache
 .stylelintcache
+
+# Archivos específicos del proyecto Epson-Zoho
+# Tokens y credenciales sensibles
+.env.zoho
+.env.tokens
+zoho_credentials.json
+oauth_tokens.json
+
+# Logs específicos del backend proxy
+logs/
+*.log
+backend.log
+zoho-api.log
+error.log
+
+# Archivos temporales de scraping
+temp/
+tmp/
+scraping_results.json
+products_cache.json
+
+# Archivos de desarrollo y testing
+test-results/
+debug/
+.test-env
+
+# Archivos de imágenes temporales
+images/temp/
+image_cache/
+
+# Archivos de monitoreo
+monitoring/
+metrics/
+performance.json

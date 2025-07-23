@@ -6,13 +6,16 @@
 
 // Cargar variables de entorno ANTES de importar otros módulos
 import dotenv from 'dotenv';
-dotenv.config();
+import path from 'path';
+
+// Configurar dotenv con la ruta correcta al archivo .env en Backend
+dotenv.config({ path: path.join(__dirname, '../.env') });
 
 import express from 'express';
 import cors from 'cors';
 import zohoRoutes from './routes/zoho.routes';
+import encryptionRoutes from './routes/encryption.routes';
 import { initializeTokenRefresh } from './config/zoho.config';
-import encryptionRoutes from './routes/encryption.routes'
 
 // Crear instancia de la aplicación Express
 const app = express();
