@@ -8,8 +8,7 @@
   "keywords": [],
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
-    "build": "tsc",
-    "start": "node dist/app.js",
+    "start": "ts-node src/app.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "sql": "ts-node-dev src/config/SqlServer.ts",
     "test-tokens": "ts-node test/test-token-refresh.ts"
