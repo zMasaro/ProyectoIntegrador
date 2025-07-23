@@ -1,11 +1,14 @@
 import * as mssql from 'mssql';
+import dotenv from 'dotenv';
+import path from 'path';
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 const ConnectionSettings: mssql.config = {
-  server: 'localhost',
-  database: 'Login',
-  user: 'sa',
-  password: 'Matias123',
-  port: 1433,
+  server: String (process.env.DB_SERVER) ,
+  database: String( process.env.DB_DATABASE),
+  user: String (process.env.DB_USER) ,
+  password: String (process.env.DB_PASSWORD) ,
+  port: Number(process.env.DB_PORT),
   options: {
     encrypt: false,
     trustServerCertificate: true,
