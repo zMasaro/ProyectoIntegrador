@@ -11,8 +11,8 @@ dotenv.config();
 import express from 'express';
 import cors from 'cors';
 import zohoRoutes from './routes/zoho.routes';
-import encryptionRoutes from './routes/zoho.routes';
 import { initializeTokenRefresh } from './config/zoho.config';
+import encryptionRoutes from './routes/encryption.routes'
 
 // Crear instancia de la aplicación Express
 const app = express();
@@ -31,7 +31,7 @@ app.use(express.json()); // Parser para JSON en el body de las peticiones
 app.use('/api/zoho', zohoRoutes);
 
 // Rutas para encriptación y comparación del hash
-app.use('api/security', encryptionRoutes);
+app.use('/api/security', encryptionRoutes);
 
 // Iniciar el servidor
 app.listen(PORT, () => {
