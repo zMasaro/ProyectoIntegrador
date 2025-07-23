@@ -1,12 +1,64 @@
 import axios from "axios";
-import { ZOHO_AUTH_TOKEN, ZOHO_ORG_ID } from "../config/zoho.config";
+import { getCurrentToken, ZOHO_ORG_ID, ZOHO_INVENTORY_URL, refreshAccessToken } from "../config/zoho.config";
 
 /**
  * Servicio para interactuar con la API de Zoho Inventory
  * Permite obtener productos específicos de Epson desde el inventario
+ * Incluye manejo automático de renovación de tokens
  */
 export class ZohoService {
-  private readonly baseURL = "https://www.zohoapis.com/inventory/v1";
+  private readonly baseURL = `${ZOHO_INVENTORY_URL}/inventory/v1`;
+
+  /**
+   * Realiza una petición HTTP con manejo automático de tokens
+   * @param url - URL del endpoint
+   * @param config - Configuración adicional de axios
+   * @returns Promise con la respuesta de la API
+   */
+  private async makeAuthenticatedRequest(url: string, config: any = {}) {
+    try {
+      const token = await getCurrentToken();
+      
+      const response = await axios.get(url, {
+        ...config,
+        headers: {
+          Authorization: `Zoho-oauthtoken ${token}`,
+          "Content-Type": "application/json",
+          "X-com-zoho-inventory-organizationid": ZOHO_ORG_ID,
+          ...config.headers
+        }
+      });
+
+      return response;
+    } catch (error: any) {
+      // Si el token expiró (401), intentar renovarlo y reintentar
+      if (error.response?.status === 401) {
+        console.log('Token expirado, renovando automáticamente...');
+        try {
+          await refreshAccessToken();
+          const newToken = await getCurrentToken();
+          
+          // Reintentar la petición con el nuevo token
+          const response = await axios.get(url, {
+            ...config,
+            headers: {
+              Authorization: `Zoho-oauthtoken ${newToken}`,
+              "Content-Type": "application/json",
+              "X-com-zoho-inventory-organizationid": ZOHO_ORG_ID,
+              ...config.headers
+            }
+          });
+
+          return response;
+        } catch (refreshError) {
+          console.error('Error renovando token automáticamente:', refreshError);
+          throw refreshError;
+        }
+      }
+      
+      throw error;
+    }
+  }
 
   /**
    * Obtiene una página de productos Epson desde Zoho Inventory
@@ -20,14 +72,7 @@ export class ZohoService {
       'page': '1'
     });
     
-    const response = await axios.get(`${this.baseURL}/items?${searchParams.toString()}`, {
-      headers: {
-        Authorization: `Zoho-oauthtoken ${ZOHO_AUTH_TOKEN}`,
-        "Content-Type": "application/json",
-        "X-com-zoho-inventory-organizationid": ZOHO_ORG_ID,
-      },
-    });
-
+    const response = await this.makeAuthenticatedRequest(`${this.baseURL}/items?${searchParams.toString()}`);
     return response.data;
   }
 
@@ -49,14 +94,7 @@ export class ZohoService {
         'page': currentPage.toString()
       });
       
-      const response = await axios.get(`${this.baseURL}/items?${searchParams.toString()}`, {
-        headers: {
-          Authorization: `Zoho-oauthtoken ${ZOHO_AUTH_TOKEN}`,
-          "Content-Type": "application/json",
-          "X-com-zoho-inventory-organizationid": ZOHO_ORG_ID,
-        },
-      });
-
+      const response = await this.makeAuthenticatedRequest(`${this.baseURL}/items?${searchParams.toString()}`);
       const data = response.data;
       
       // Procesar los resultados de la página actual

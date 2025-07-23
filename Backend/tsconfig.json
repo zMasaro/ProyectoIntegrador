@@ -24,7 +24,7 @@
 
     /* Modules */
     "module": "commonjs",
-    "rootDir": "./src",                                  /* NUEVO: indica carpeta fuente */
+    // "rootDir": "./src",                                  /* COMENTADO: para incluir test/ */
     "outDir": "./dist",                                  /* NUEVO: salida de archivos compilados */
     // "moduleResolution": "node10",
     // "baseUrl": "./",
