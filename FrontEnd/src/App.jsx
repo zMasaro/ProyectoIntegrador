@@ -16,13 +16,11 @@ function App() {
 export default App;
 
 
-  /**
+  
   const [productos, setProductos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-   * Efecto que se ejecuta al montar el componente
-   * Carga los productos Epson desde la API
    
   useEffect(() => {
     const cargarProductos = async () => {
@@ -94,5 +92,5 @@ export default App;
         )}
       </main>
     </div>
-  );*/
+  );
 
