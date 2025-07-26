@@ -2,11 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { obtenerProductos } from './services/zoho';
 //import './App.css';
 //import Login from './pages/Login.jsx'; 
-import SingUp from './pages/SignUp.jsx';
+//import SingUp from './pages/SignUp.jsx';
+import SidebarPage from './pages/Sidebar';
+
+
+
 
 function App() {
  return ( 
-  <SingUp />
+  <SidebarPage />
  );  
 }
 export default App;

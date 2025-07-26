@@ -1,5 +1,6 @@
 import CustomButton from "../components/CustomButton";
 
+
 function SingUp() {
     return (
         <form>
