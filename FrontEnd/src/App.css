@@ -12,66 +12,164 @@ body {
   color: #2c3e50;
 }
 
-/* Contenedor principal */
+/* Contenedor principal de la aplicación */
 .app-container {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Header */
+/* Header principal */
 .app-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 2rem;
   text-align: center;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .app-header h1 {
+  color: #2c3e50;
   font-size: 2.5rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 10px;
   font-weight: 700;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .app-header p {
+  color: #6c757d;
   font-size: 1.1rem;
-  opacity: 0.9;
-  font-weight: 300;
+  margin-bottom: 20px;
+}
+
+/* Campo de búsqueda */
+.search-container {
+  position: relative;
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+.search-input {
+  width: 100%;
+  padding: 15px 50px 15px 20px;
+  border: 2px solid #e9ecef;
+  border-radius: 25px;
+  font-size: 1.1rem;
+  background: rgba(255, 255, 255, 0.9);
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  background: white;
+}
+
+.search-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  color: #6c757d;
+  pointer-events: none;
+}
+
+/* Botón de actualizar */
+.refresh-button {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 10px 5px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.refresh-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.refresh-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Estadísticas del header */
+.header-stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+  padding: 15px;
+  background: rgba(102, 126, 234, 0.1);
+  border-radius: 10px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 120px;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin-bottom: 5px;
+}
+
+.stat-value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.stat-item.filtrados .stat-value {
+  color: #667eea;
+  font-size: 1.5rem;
+}
+
+/* Información de filtro */
+.filter-info {
+  color: #667eea;
+  font-style: italic;
+  margin-top: 10px;
 }
 
 /* Contenido principal */
 .app-main {
-  flex: 1;
-  padding: 2rem;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
-  width: 100%;
 }
 
-/* Loading */
-.loading-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 4rem;
-  background: white;
+/* Estados de carga y error */
+.loading-container, .error-container {
+  text-align: center;
+  padding: 60px 20px;
+  background: rgba(255, 255, 255, 0.95);
   border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  margin: 2rem auto;
-  max-width: 400px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .loading-spinner {
   width: 50px;
   height: 50px;
-  border: 5px solid #e3e3e3;
+  border: 5px solid #f3f3f3;
   border-top: 5px solid #667eea;
   border-radius: 50%;
   animation: spin 1s linear infinite;
-  margin-bottom: 1rem;
+  margin: 0 auto 20px;
 }
 
 @keyframes spin {
@@ -79,211 +177,59 @@ body {
   100% { transform: rotate(360deg); }
 }
 
-.loading-container p {
-  font-size: 1.1rem;
-  color: #666;
-  font-weight: 500;
-}
-
-/* Error */
-.error-container {
-  background: #fff5f5;
-  border: 2px solid #fed7d7;
-  border-radius: 15px;
-  padding: 2rem;
-  text-align: center;
-  max-width: 500px;
-  margin: 2rem auto;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-}
-
 .error-container h3 {
-  color: #e53e3e;
-  margin-bottom: 1rem;
-  font-size: 1.3rem;
+  color: #dc3545;
+  margin-bottom: 15px;
 }
 
-.error-container p {
-  color: #c53030;
-  font-size: 1.1rem;
-}
-
-/* Contenedor de productos */
-.products-container {
-  background: white;
-  border-radius: 15px;
-  padding: 2rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-}
-
-.products-header {
-  text-align: center;
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 3px solid #e2e8f0;
-}
-
-.products-header h2 {
-  color: #2d3748;
-  font-size: 1.8rem;
+.retry-button {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
   font-weight: 600;
-}
-
-/* Grid de productos */
-.products-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 1.5rem;
-  max-height: 70vh;
-  overflow-y: auto;
-  padding-right: 0.5rem;
-}
-
-/* Scrollbar personalizado */
-.products-grid::-webkit-scrollbar {
-  width: 8px;
-}
-
-.products-grid::-webkit-scrollbar-track {
-  background: #f1f5f9;
-  border-radius: 10px;
-}
-
-.products-grid::-webkit-scrollbar-thumb {
-  background: #cbd5e0;
-  border-radius: 10px;
-}
-
-.products-grid::-webkit-scrollbar-thumb:hover {
-  background: #a0aec0;
-}
-
-/* Tarjeta de producto */
-.product-card {
-  background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 1.5rem;
+  cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  margin-top: 15px;
 }
 
-.product-card:hover {
+.retry-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-  border-color: #667eea;
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
 }
 
-/* Header del producto */
-.product-header {
-  margin-bottom: 1rem;
-  border-bottom: 2px solid #f1f5f9;
-  padding-bottom: 1rem;
-}
-
-.product-name {
-  color: #2d3748;
-  font-size: 1.1rem;
-  font-weight: 600;
-  line-height: 1.4;
-  margin-bottom: 0.5rem;
-  word-wrap: break-word;
-}
-
-.product-sku {
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: white;
-  padding: 0.3rem 0.8rem;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  display: inline-block;
-}
-
-/* Detalles del producto */
-.product-details {
-  color: #4a5568;
-}
-
-.product-description {
-  margin-bottom: 1rem;
-  line-height: 1.5;
-  font-size: 0.95rem;
-}
-
-.product-description strong {
-  color: #2d3748;
-  font-weight: 600;
-}
-
-.product-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid #e2e8f0;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.product-id {
-  background: #edf2f7;
-  color: #4a5568;
-  padding: 0.2rem 0.6rem;
-  border-radius: 12px;
-  font-size: 0.8rem;
-  font-weight: 500;
-}
-
-.product-price {
-  background: linear-gradient(135deg, #48bb78, #38a169);
-  color: white;
-  padding: 0.3rem 0.8rem;
-  border-radius: 15px;
+/* Mensaje adicional en loading */
+.loading-container small {
+  display: block;
+  margin-top: 10px;
+  color: #6c757d;
   font-size: 0.9rem;
-  font-weight: 600;
+  font-style: italic;
 }
 
-/* Responsive */
+/* Responsividad */
 @media (max-width: 768px) {
-  .app-header {
-    padding: 1.5rem;
+  .app-container {
+    padding: 10px;
   }
-  
+
   .app-header h1 {
     font-size: 2rem;
   }
-  
-  .app-main {
-    padding: 1rem;
-  }
-  
-  .products-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-  
-  .product-card {
-    padding: 1rem;
-  }
-  
-  .product-info {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
 
-@media (max-width: 480px) {
-  .app-header h1 {
-    font-size: 1.8rem;
+  .header-stats {
+    flex-direction: column;
+    gap: 10px;
   }
-  
-  .products-header h2 {
-    font-size: 1.5rem;
+
+  .stat-item {
+    min-width: auto;
   }
-  
-  .product-name {
+
+  .search-input {
     font-size: 1rem;
+    padding: 12px 40px 12px 15px;
   }
 }
