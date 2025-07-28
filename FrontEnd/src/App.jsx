@@ -1,39 +1,26 @@
-/**
- * Componente principal de la aplicación de inventario Epson
- * Muestra una interfaz para visualizar productos Epson obtenidos desde Zoho Inventory
- */
-
 import React, { useEffect, useState } from 'react';
 import { obtenerProductos } from './services/zoho';
 //import './App.css';
-import Login from './pages/Login.jsx'; // Asegúrate de que la ruta sea correcta
+//import Login from './pages/Login.jsx'; 
+//import SingUp from './pages/SignUp.jsx';
+import SidebarPage from './pages/Sidebar';
 
-/**
- * Componente App - Interfaz principal del inventario
- * 
- * Estados:
- * - productos: Array de productos Epson obtenidos de la API
- * - loading: Booleano que indica si los datos están cargando
- * - error: String con mensaje de error si ocurre algún problema
- */
+
+
+
 function App() {
-
  return ( 
-  <Login></Login>
- );
-  
+  <SidebarPage />
+ );  
 }
-
 export default App;
 
 
-  /**
+  
   const [productos, setProductos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-   * Efecto que se ejecuta al montar el componente
-   * Carga los productos Epson desde la API
    
   useEffect(() => {
     const cargarProductos = async () => {
@@ -105,5 +92,5 @@ export default App;
         )}
       </main>
     </div>
-  );*/
+  );
 
