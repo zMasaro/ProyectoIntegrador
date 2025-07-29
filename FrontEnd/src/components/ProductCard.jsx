@@ -1,20 +1,122 @@
 
 
-function ProductCard(props) {
-    const { image, itemId,sku, name, description, price } = props;
+function ProductCard(producto) {
+    //const { itemId, sku, name, description, price } = producto;
+
+    //Control de errores de imagen
+    const manejarErrorImagen = (image) => {
+        image.target.style.display = 'none';
+        const placeholder = image.target.nextElementSibling;
+        if (placeholder) {
+            placeholder.style.display = 'flex';
+        }
+    };
+
+    //Le da el Formato al precio
+    const formatearPrecio = (precio) => {
+        if (!precio) return 'Precio no disponible';
+        const numero = parseFloat(precio);
+        if (isNaN(numero)) return 'Precio no disponible';
+        const formatter = new Intl.NumberFormat('es-CR', {
+            style: 'currency',
+            currency: 'CRC',
+            minimumFractionDigits: 0
+        })
+        return formatter.format(numero);
+    };
+
+    //Construye la URL de imagen usando el proxy del backend
+    // Muy ineficiente porque hace tardar la pagina en cargar demasiado, pero no hay otra forma de hacerlo
+    const construirUrlImagen = (producto) => {
+        if (!producto.itemId) return null;
+        return `http://localhost:3001/api/zoho/imagen/${producto.itemId}`;
+    };
+
+
+    
 
     return (
         <article className="product-card">
-            <img src={image} alt={`Imagen de ${name}`} className="product-image" />
-            <section className="product-content">
-                <header>
-                    <h2 className="product-title">{name}</h2>
-                </header>
-                <p className="product-code">Código: {itemId}</p>                
-                <p className="product-sku">SKU: {sku}</p>
-                <p className="product-price">${price.toFixed(2)}</p>
-                <p className="product-description">{description}</p>
-            </section>
+
+
+           <div key={producto.item_id} className="product-card">
+            
+            {/* Sección de imagen */}
+            <div className="product-image">
+              {construirUrlImagen(producto) ? (
+                <img 
+                  src={construirUrlImagen(producto)}
+                  alt={producto.name || 'Producto Epson'}
+                  onError={manejarErrorImagen}
+                  loading="lazy"
+                />
+              ) : null}
+              <div className="image-placeholder" style={{ display: 'none' }}>
+                <span>Sin imagen</span>
+              </div>
+            </div>
+            
+            {/* Header del producto */}
+            <div className="product-header">
+              <h3 className="product-name" title={producto.name}>
+                {producto.name || 'Producto sin nombre'}
+              </h3>
+              
+              {producto.sku && (
+                <span className="product-sku">SKU: {producto.sku}</span>
+              )}
+              
+              {producto.product_category && (
+                <span className="product-category">
+                  {producto.product_category}
+                </span>
+              )}
+            </div>
+            
+            {/* Detalles del producto */}
+            <div className="product-details">
+              {producto.description && (
+                <p className="product-description">
+                  <strong>Descripción:</strong> {producto.description}
+                </p>
+              )}
+              
+              {/* Información comercial */}
+              <div className="product-info">
+                {producto.rate && (
+                  <span className="product-price">
+                    {formatearPrecio(producto.rate)}
+                  </span>
+                )}
+                
+                {producto.stock_on_hand !== undefined && (
+                  <span className={`product-stock ${producto.stock_on_hand > 0 ? 'in-stock' : 'out-of-stock'}`}>
+                    Stock: {producto.stock_on_hand}
+                  </span>
+                )}
+                
+                {producto.status && (
+                  <span className={`product-status status-${producto.status.toLowerCase()}`}>
+                    {producto.status}
+                  </span>
+                )}
+              </div>
+              
+              {/* Información adicional */}
+              {(producto.brand || producto.manufacturer) && (
+                <div className="product-meta">
+                  {producto.brand && (
+                    <span className="product-brand">Marca: {producto.brand}</span>
+                  )}
+                  {producto.manufacturer && (
+                    <span className="product-manufacturer">
+                      Fabricante: {producto.manufacturer}
+                    </span>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
         </article>
     );
 }
