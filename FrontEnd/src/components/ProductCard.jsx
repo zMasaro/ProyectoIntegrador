@@ -39,7 +39,7 @@ function ProductCard(producto) {
         <article className="product-card">
 
 
-           <div key={producto.item_id} className="product-card">
+           <div key={producto.itemId} className="product-card">
             
             {/* Sección de imagen */}
             <div className="product-image">
@@ -62,13 +62,17 @@ function ProductCard(producto) {
                 {producto.name || 'Producto sin nombre'}
               </h3>
               
+              {producto.itemId && (
+                <span className="product-sku">Item id: {producto.itemId} <br /></span>
+              )}
+
               {producto.sku && (
                 <span className="product-sku">SKU: {producto.sku}</span>
               )}
               
-              {producto.product_category && (
+              {producto.productCategory && (
                 <span className="product-category">
-                  {producto.product_category}
+                  {producto.productCategory}
                 </span>
               )}
             </div>
@@ -83,21 +87,21 @@ function ProductCard(producto) {
               
               {/* Información comercial */}
               <div className="product-info">
-                {producto.rate && (
+                {producto.price && (
                   <span className="product-price">
-                    {formatearPrecio(producto.rate)}
+                    {formatearPrecio(producto.price)} <br />  
                   </span>
                 )}
                 
                 {producto.stock_on_hand !== undefined && (
                   <span className={`product-stock ${producto.stock_on_hand > 0 ? 'in-stock' : 'out-of-stock'}`}>
-                    Stock: {producto.stock_on_hand}
+                    Stock: {producto.stock_on_hand} <br />
                   </span>
                 )}
                 
                 {producto.status && (
                   <span className={`product-status status-${producto.status.toLowerCase()}`}>
-                    {producto.status}
+                    Estado: {producto.status} <br />
                   </span>
                 )}
               </div>

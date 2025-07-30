@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import BrandFilter from '../components/BrandFilter';
-import "../styles/Sidebar.css";
+//import "../styles/Sidebar.css";
 
 const categorias = [
   {

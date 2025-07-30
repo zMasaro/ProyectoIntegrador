@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { obtenerProductosPorBusqueda } from '../services/zoho.ts';
 import ProductCard from '../components/ProductCard.jsx';
+import Sidebar from '../components/Sidebar.jsx';
 
 function Main() {
 
@@ -111,44 +112,49 @@ function Main() {
                 </article>
             </header>
 
-            <section>
+            <Sidebar/>
 
-                <main className="app-main">
-                    {loading ? (
-                        // Estado de carga mientras el backend consulta Zoho API
-                        <div className="loading-container">
-                            <div className="loading-spinner"></div>
-                            <p>Consultando inventario Epson desde Zoho...</p>
-                            <small>Procesando productos con 80+ términos de búsqueda</small>
-                        </div>
-                    ) : error ? (
-                        // Estado de error de conexión con backend/Zoho
-                        <div className="error-container">
-                            <h3>Error de Conexión</h3>
-                            <p>{error}</p>
-                            <button onClick={cargarProductos} className="retry-button">
-                                Reintentar Conexión
-                            </button>
-                        </div>
-                    ) : (
-                        // Componente especializado para mostrar productos
+            <main className="app-main">
+                {loading ? (
+                    // Estado de carga mientras el backend consulta Zoho API
+                    <div className="loading-container">
+                        <div className="loading-spinner"></div>
+                        <p>Consultando inventario Epson desde Zoho...</p>
+                        <small>Procesando productos con 80+ términos de búsqueda</small>
+                    </div>
+                ) : error ? (
+                    // Estado de error de conexión con backend/Zoho
+                    <div className="error-container">
+                        <h3>Error de Conexión</h3>
+                        <p>{error}</p>
+                        <button onClick={cargarProductos} className="retry-button">
+                            Reintentar Conexión
+                        </button>
+                    </div>
+                ) : (
+                    // Componente especializado para mostrar productos
 
-                        <>{
-                            productosFiltrados.map((producto) => (
-                                <ProductCard
-                                    key={producto.item_id}
-                                    itemId={producto.item_id}
-                                    sku={producto.sku}
-                                    name={producto.name}
-                                    description={producto.description}
-                                    price={producto.price}
-                                />
-                            ))
-                            }
-                        </>
-                    )}
-                </main>
-            </section>
+                    <>{
+                        productosFiltrados.map((producto) => (
+                            <ProductCard
+                                key={producto.item_id}
+                                itemId={producto.item_id}
+                                sku={producto.sku}
+                                name={producto.name}
+                                description={producto.description}
+                                price={producto.rate}
+                                
+                                productCategory={producto.product_category}
+                                stock_on_hand ={producto.stock_on_hand}
+                                status={producto.status}
+                                brand={producto.brand}
+                                manufacturer={producto.manufacturer}
+                            />
+                        ))
+                    }
+                    </>
+                )}
+            </main>
 
         </section>
     );
