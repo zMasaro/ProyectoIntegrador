@@ -18,13 +18,18 @@ const categorias = [
     key: 'conectividad',
     options: ['Wi-Fi', 'USB', 'Bluetooth', 'Ethernet'],
   },
+  {
+    title: 'Generales',
+    key: 'generales',
+    options: ['Tinta', 'Cartucho', 'Láser', 'Sublimación'],
+  },
 ];
 
-function Sidebar() {
+function Sidebar({ categoriasFiltradas }) {
   const [mostrarSidebar, setMostrarSidebar] = useState(false);
 
   const handleChange = (selecciones) => {
-    console.log('Filtros seleccionados:', selecciones);
+    categoriasFiltradas(selecciones);
   };
 
   const toggleSidebar = () => {
