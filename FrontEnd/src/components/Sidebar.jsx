@@ -11,17 +11,17 @@ const categorias = [
   {
     title: 'Tipo de Función',
     key: 'funcion',
-    options: ['Multifunción', 'Escáner', 'Fotográfica', 'Solo impresión'],
+    options: ['Multifunción', 'Escaner', 'Impresora'],
   },
   {
     title: 'Conectividad',
     key: 'conectividad',
-    options: ['Wi-Fi', 'USB', 'Bluetooth', 'Ethernet'],
+    options: ['Wi-Fi', 'USB', 'Bluetooth'],
   },
   {
     title: 'Generales',
     key: 'generales',
-    options: ['Tinta', 'Cartucho', 'Láser', 'Sublimación'],
+    options: ['Tinta', 'Cartucho', 'Laser', 'Sublimación'],
   },
 ];
 

@@ -34,82 +34,55 @@ function Main() {
         }
     };
 
-
+    const [filtrosCheckbox, setFiltrosCheckbox] = useState({});
+    
     const filtrarProductos = useCallback((filtros) => {
-        // Si no hay filtros, mostrar todos los productos
-        if (!filtros || (typeof filtros === 'string' && !filtros.trim())) {
-            setProductosFiltrados(productos);
-            return;
+        if (typeof filtros === 'object') {
+        setFiltrosCheckbox(filtros);
         }
-
-        // Si es una cadena de texto, realizar búsqueda general
-        if (typeof filtros === 'string') {
-            const terminoLower = filtros.toLowerCase();
-            const filtrados = productos.filter(producto => {
-                const nombre = (producto.name || '').toLowerCase();
-                const descripcion = (producto.description || '').toLowerCase();
-                const sku = (producto.sku || '').toLowerCase();
-                const categoria = (producto.product_category || '').toLowerCase();
-
-                return nombre.includes(terminoLower) ||
-                    descripcion.includes(terminoLower) ||
-                    sku.includes(terminoLower) ||
-                    categoria.includes(terminoLower);
-            });
-            setProductosFiltrados(filtrados);
-            return;
-        }
-
-        // Si es un objeto con selecciones múltiples
-        const filtrados = productos.filter(producto => {
-            // Convertir todos los valores a minúsculas para comparación
+        let resultadosFiltrados = productos;
+       if (busqueda) {
+        const terminoLower = busqueda.toLowerCase();
+        resultadosFiltrados = resultadosFiltrados.filter(producto => {
             const nombre = (producto.name || '').toLowerCase();
             const descripcion = (producto.description || '').toLowerCase();
+            const sku = (producto.sku || '').toLowerCase();
             const categoria = (producto.product_category || '').toLowerCase();
 
-            // Verificar cada tipo de filtro
-            const cumpleModelo = !filtros.modelo?.length || 
-                filtros.modelo.some(modelo => 
-                    nombre.includes(modelo.toLowerCase()) || 
-                    descripcion.includes(modelo.toLowerCase())
-                );
-
-            const cumpleFuncion = !filtros.funcion?.length || 
-                filtros.funcion.some(funcion => 
-                    descripcion.includes(funcion.toLowerCase())
-                );
-
-            const cumpleConectividad = !filtros.conectividad?.length || 
-                filtros.conectividad.some(conn => 
-                    descripcion.includes(conn.toLowerCase())
-                );
-
-            const cumpleGenerales = !filtros.generales?.length || 
-                filtros.generales.some(gen => 
-                    categoria.includes(gen.toLowerCase()) || 
-                    descripcion.includes(gen.toLowerCase())
-                );
-            //Revisar el filtro que no trae algunos de los productos
-            //return cumpleModelo && cumpleFuncion && cumpleConectividad && cumpleGenerales;
-            // Si hay al menos un filtro seleccionado, el producto debe cumplir con al menos uno de ellos
-            const hayFiltrosSeleccionados = 
-                filtros.modelo?.length > 0 || 
-                filtros.funcion?.length > 0 || 
-                filtros.conectividad?.length > 0 || 
-                filtros.generales?.length > 0;
-
-            // Si no hay filtros seleccionados, mostrar el producto
-            if (!hayFiltrosSeleccionados) return true;
-
-            // El producto debe cumplir al menos con uno de los filtros aplicados
-            return (filtros.modelo?.length ? cumpleModelo : false) || 
-                   (filtros.funcion?.length ? cumpleFuncion : false) || 
-                   (filtros.conectividad?.length ? cumpleConectividad : false) || 
-                   (filtros.generales?.length ? cumpleGenerales : false);
+            return nombre.includes(terminoLower) ||
+                descripcion.includes(terminoLower) ||
+                sku.includes(terminoLower) ||
+                categoria.includes(terminoLower);
         });
+    }
 
-        setProductosFiltrados(filtrados);
-    }, [productos]);
+        if (Object.keys(filtrosCheckbox).length > 0){
+         resultadosFiltrados = resultadosFiltrados.filter(producto => {
+            const nombre = (producto.name || '').toLowerCase();
+            const descripcion = (producto.description || '').toLowerCase();
+
+            const cumpleFiltro = (claveFiltro) => {
+                const filtro = filtros[claveFiltro];
+                return (
+                    !filtro?.length ||
+                    filtro.some(valor =>
+                        nombre.toLowerCase().includes(valor.toLowerCase()) ||
+                        descripcion.toLowerCase().includes(valor.toLowerCase())
+                    )
+                );
+            };
+            
+            const cumpleModelo = cumpleFiltro('modelo');
+            const cumpleFuncion = cumpleFiltro('funcion');
+            const cumpleConectividad = cumpleFiltro('conectividad');
+            const cumpleGenerales = cumpleFiltro('generales');
+
+            return cumpleModelo && cumpleFuncion && cumpleConectividad && cumpleGenerales;
+            
+        });
+    }
+        setProductosFiltrados(resultadosFiltrados);
+    }, [productos, busqueda, filtrosCheckbox]);
 
     /**
      * Carga los productos automáticamente al montar el componente
@@ -124,10 +97,8 @@ function Main() {
      * Útil después de actualizar el inventario
      */
     useEffect(() => {
-        if (busqueda) {
-            filtrarProductos(busqueda);
-        }
-    }, [productos, busqueda, filtrarProductos]);
+        filtrarProductos(filtrosCheckbox);
+    }, [productos, busqueda, filtrosCheckbox, filtrarProductos]);
 
 
     // Si no hay productos, mostrar mensaje
@@ -150,7 +121,7 @@ function Main() {
                     <input type="text" placeholder="Buscar productos Epson (ej: L3110, EcoTank, tintas, cartuchos...)" value={busqueda} onChange={(texto) => {
                         const valor = texto.target.value;
                         setBusqueda(valor);
-                        filtrarProductos(valor);
+                        filtrarProductos(filtrosCheckbox);
                     }}
                         className="search-input"
                     />
@@ -165,7 +136,7 @@ function Main() {
                 </article>
             </header>
 
-            <Sidebar categoriasFiltradas={filtrarProductos}/>
+            <Sidebar categoriasFiltradas={filtrarProductos} />
 
             <main className="app-main">
                 {loading ? (
@@ -196,9 +167,9 @@ function Main() {
                                 name={producto.name}
                                 description={producto.description}
                                 price={producto.rate}
-                                
+
                                 productCategory={producto.product_category}
-                                stock_on_hand ={producto.stock_on_hand}
+                                stock_on_hand={producto.stock_on_hand}
                                 status={producto.status}
                                 brand={producto.brand}
                                 manufacturer={producto.manufacturer}
