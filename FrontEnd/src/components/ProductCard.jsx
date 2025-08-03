@@ -39,7 +39,7 @@ function ProductCard(producto) {
         <article className="product-card">
 
 
-           <div key={producto.itemId} className="product-card">
+           <div key={producto.itemId} >
             
             {/* Sección de imagen */}
             <div className="product-image">
