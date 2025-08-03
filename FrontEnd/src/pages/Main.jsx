@@ -126,7 +126,7 @@ function Main() {
                         onChange={(texto) => {
                             const valor = texto.target.value;
                             setBusqueda(valor);
-                            filtrarProductos(valor);
+                            filtrarProductos(filtrosCheckbox);
                         }}
                         className="search-input"
                     />
@@ -140,7 +140,7 @@ function Main() {
             </header>
 
             <section class="hero">
-                <Sidebar class="Sidebar" />
+                <Sidebar class="Sidebar" categoriasFiltradas={filtrarProductos} />
 
                 <main className="main">
                     {loading ? (
