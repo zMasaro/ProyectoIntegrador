@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { obtenerProductosPorBusqueda } from '../services/zoho.ts';
 import ProductCard from '../components/ProductCard.jsx';
 import Sidebar from '../components/Sidebar.jsx';
@@ -35,16 +35,16 @@ function Main() {
         }
     };
 
-
-    const filtrarProductos = (termino) => {
-        //Hace que productosFiltrados sea igual a productos si no hay término de búsqueda
-        if (!termino.trim()) {
-            setProductosFiltrados(productos);
-            return;
+    const [filtrosCheckbox, setFiltrosCheckbox] = useState({});
+    
+    const filtrarProductos = useCallback((filtros) => {
+        if (typeof filtros === 'object') {
+        setFiltrosCheckbox(filtros);
         }
-
-        const terminoLower = termino.toLowerCase();
-        const filtrados = productos.filter(producto => {
+        let resultadosFiltrados = productos;
+       if (busqueda) {
+        const terminoLower = busqueda.toLowerCase();
+        resultadosFiltrados = resultadosFiltrados.filter(producto => {
             const nombre = (producto.name || '').toLowerCase();
             const descripcion = (producto.description || '').toLowerCase();
             const sku = (producto.sku || '').toLowerCase();
@@ -55,9 +55,35 @@ function Main() {
                 sku.includes(terminoLower) ||
                 categoria.includes(terminoLower);
         });
-        //hace que productosFiltrados sea igual a filtrados
-        setProductosFiltrados(filtrados);
-    };
+    }
+
+        if (Object.keys(filtrosCheckbox).length > 0){
+         resultadosFiltrados = resultadosFiltrados.filter(producto => {
+            const nombre = (producto.name || '').toLowerCase();
+            const descripcion = (producto.description || '').toLowerCase();
+
+            const cumpleFiltro = (claveFiltro) => {
+                const filtro = filtros[claveFiltro];
+                return (
+                    !filtro?.length ||
+                    filtro.some(valor =>
+                        nombre.toLowerCase().includes(valor.toLowerCase()) ||
+                        descripcion.toLowerCase().includes(valor.toLowerCase())
+                    )
+                );
+            };
+            
+            const cumpleModelo = cumpleFiltro('modelo');
+            const cumpleFuncion = cumpleFiltro('funcion');
+            const cumpleConectividad = cumpleFiltro('conectividad');
+            const cumpleGenerales = cumpleFiltro('generales');
+
+            return cumpleModelo && cumpleFuncion && cumpleConectividad && cumpleGenerales;
+            
+        });
+    }
+        setProductosFiltrados(resultadosFiltrados);
+    }, [productos, busqueda, filtrosCheckbox]);
 
     /**
      * Carga los productos automáticamente al montar el componente
@@ -72,10 +98,8 @@ function Main() {
      * Útil después de actualizar el inventario
      */
     useEffect(() => {
-        if (busqueda) {
-            filtrarProductos(busqueda);
-        }
-    }, [productos]);
+        filtrarProductos(filtrosCheckbox);
+    }, [productos, busqueda, filtrosCheckbox, filtrarProductos]);
 
 
     // Si no hay productos, mostrar mensaje
