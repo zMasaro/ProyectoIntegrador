@@ -1,4 +1,4 @@
-
+import '../styles/Card.css';
 
 function ProductCard(producto) {
     //const { itemId, sku, name, description, price } = producto;
@@ -32,9 +32,6 @@ function ProductCard(producto) {
         return `http://localhost:3001/api/zoho/imagen/${producto.itemId}`;
     };
 
-
-    
-
     return (
         <article className="product-card">
 
@@ -51,9 +48,13 @@ function ProductCard(producto) {
                   loading="lazy"
                 />
               ) : null}
-              <div className="image-placeholder" style={{ display: 'none' }}>
-                <span>Sin imagen</span>
-              </div>
+             <div className="image-placeholder" style={{ display: 'none' }}>
+               <svg viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="3" width="18" height="18" rx="4" fill="#c1d72e" opacity="0.2"/>
+                <path d="M7 17L17 7M7 7l10 10" stroke="#00699e" strokeWidth="2" strokeLinecap="round"/>
+             </svg>
+           <span>Sin imagen</span>
+           </div>
             </div>
             
             {/* Header del producto */}

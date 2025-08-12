@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import BrandFilter from '../components/BrandFilter';
-//import "../styles/Sidebar.css";
+import '../styles/Sidebar.css';
+import { FaSearch } from 'react-icons/fa';
 
 const categorias = [
   {
@@ -26,47 +27,42 @@ const categorias = [
 ];
 
 function Sidebar({ categoriasFiltradas }) {
-  const [mostrarSidebar, setMostrarSidebar] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const [selectedOptions, setSelectedOptions] = useState({});
+
+  const hayChecksActivos = Object.values(selectedOptions).some(arr => arr.length > 0);
 
   const handleChange = (selecciones) => {
+    setSelectedOptions(selecciones);
     categoriasFiltradas(selecciones);
   };
 
-  const toggleSidebar = () => {
-    setMostrarSidebar(!mostrarSidebar);
-  };
-
-  const closeSidebar = () => {
-    setMostrarSidebar(false);
+  const handleMouseEnter = () => setIsHovered(true);
+  const handleMouseLeave = () => {
+    if (!hayChecksActivos) setIsHovered(false);
   };
 
   return (
-    <div className="layout">
-      {/* Botón solo visible en móvil */}
-      <button className="btn-toggle-sidebar" onClick={toggleSidebar}>
-        Filtros
-      </button>
-
-      {/* Overlay para cerrar tocando fuera */}
-      {mostrarSidebar && (
-        <div className="sidebar-overlay" onClick={closeSidebar}></div>
-      )}
-
-      {/* Sidebar como offcanvas */}
-      <BrandFilter
-        categories={categorias}
-        onChange={handleChange}
-        isOpen={mostrarSidebar}
-        onClose={closeSidebar}
-      />
-
-      <main className="main-content">
-        <h1>Catálogo Epson</h1>
-        <p>Aquí puedes mostrar productos según los filtros seleccionados.</p>
-      </main>
+    <div className={`sb-layout ${isHovered ? 'sb-expanded' : 'sb-collapsed'}`}>
+      <div
+        className="sb-sidebar"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        {isHovered ? (
+          <BrandFilter categories={categorias} onChange={handleChange} />
+        ) : (
+          <div className="sb-icon-only">
+            <FaSearch className="sb-icon" title="Buscar" />
+          </div>
+        )}
+      </div>
     </div>
   );
 }
 
 export default Sidebar;
+
+
+
 
