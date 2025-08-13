@@ -1,0 +1,193 @@
+@import url('https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;700&display=swap');
+:root {
+  --azul-principal: #00699e;
+  --azul-hover: #4f8cff;
+  --verde-lima: #c1d72e;
+  --azul-oscuro: #091337;
+  --gris-claro: #e5e7eb;
+  --gris-hover: #f3f4f6;
+  --negro: #222;
+  --blanco: #fff;
+  --shadow: 0 4px 24px rgba(0,0,0,0.07);
+  --radius: 16px;
+}
+
+.product-card {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background: var(--blanco);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.5rem 1.2rem;
+  /* Elimina margen vertical y usa el gap del contenedor */
+  margin: 0; 
+  transition: box-shadow 0.2s, transform 0.2s;
+  
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  /* Permite que se adapte en grid/flex sin dejar huecos */
+  flex: 1 1 280px;
+  min-width: 260px;
+  /* max-width: none; Quitamos el tope fijo de 350px */
+
+  border: 1px solid var(--gris-claro);
+}
+
+
+.product-card:hover {
+  box-shadow: 0 8px 32px rgba(0,105,158,0.13);
+  transform: translateY(-4px) scale(1.02);
+  border-color: var(--azul-hover);
+}
+
+.product-header {
+  margin-bottom: 0.5rem;
+   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.product-name {
+   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--azul-principal);
+  margin: 0 0 0.2rem 0;
+  line-height: 1.2;
+  letter-spacing: 0.5px;
+}
+
+.product-sku,
+.product-category {
+   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 0.95rem;
+  color: var(--azul-oscuro);
+  background: var(--gris-hover);
+  border-radius: 6px;
+  padding: 0.1rem 0.5rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0.2rem;
+  display: inline-block;
+}
+
+.product-details {
+  font-size: 1rem;
+  color: var(--negro);
+   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.product-description {
+  margin: 0 0 0.5rem 0;
+  color: var(--azul-oscuro);
+  font-size: 0.98rem;
+}
+
+.product-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.product-price {
+  color: var(--verde-lima);
+   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  font-size: 1.08rem;
+  background: rgba(193,215,46,0.08);
+  border-radius: 6px;
+  padding: 0.1rem 0.6rem;
+}
+
+.product-stock {
+  font-size: 0.97rem;
+  font-weight: 500;
+  border-radius: 6px;
+  padding: 0.1rem 0.5rem;
+}
+
+.product-stock.in-stock {
+  color: var(--verde-lima);
+  background: rgba(193,215,46,0.10);
+}
+
+.product-stock.out-of-stock {
+  color: #e74c3c;
+  background: #fbeaea;
+}
+
+.product-status {
+  font-size: 0.97rem;
+  font-weight: 500;
+  border-radius: 6px;
+  padding: 0.1rem 0.5rem;
+  background: var(--gris-hover);
+  color: var(--azul-principal);
+}
+
+.product-status.status-inactivo {
+  background: #fbeaea;
+  color: #e74c3c;
+}
+
+.product-meta {
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+  color: var(--azul-oscuro);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+.product-brand,
+.product-manufacturer {
+  background: var(--gris-hover);
+  border-radius: 6px;
+  padding: 0.1rem 0.5rem;
+}
+
+.product-image {
+  width: 100%;
+  height: 180px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-bottom: 0.8rem;
+  position: relative;
+  background: transparent; /* Sin fondo gris por defecto */
+}
+
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* mantiene proporción sin recortar */
+  background: var(--gris-hover); /* fondo gris solo detrás de la imagen */
+  display: block;
+}
+
+.image-placeholder {
+  width: 100%;
+  height: 100%;
+  background: var(--gris-hover); /* fondo gris solo si no hay imagen */
+  color: var(--azul-oscuro);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  border-radius: 12px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  gap: 0.5rem;
+  z-index: 2;
+}
+
+
+.image-placeholder svg {
+  width: 38px;
+  height: 38px;
+  opacity: 0.5;
+}

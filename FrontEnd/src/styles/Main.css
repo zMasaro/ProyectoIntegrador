@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;700&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navbar superior */
+.headerMain { width: 100%; background-color: #4CAF50; padding: 12px 20px; }
+.nav-content {
+  display: flex; align-items: center; justify-content: center;
+  gap: 1rem; flex-wrap: wrap;
+}
+.search-input {
+  padding: 12px 16px; border-radius: 4px; border: none;
+  width: 600px; max-width: 100%;
+}
+.filter-info {
+  color: white; font-size: 14px; background-color: rgba(0,0,0,0.2);
+  padding: 12px 10px; border-radius: 4px;
+}
+
+/* Ahora: que la 1ª columna tome el ancho del contenido del Sidebar */
+.hero-layout {
+  display: grid;
+  grid-template-columns: auto 1fr;   /* <- clave */
+  gap: 1rem;
+  width: 100%;
+  flex: 1;
+}
+
+/* Si quieres forzar tamaños cuando está expandido vs colapsado: */
+.Sidebar { width: 260px; }            /* expandido */
+.Sidebar.is-collapsed { width: 56px; }/* colapsado (ajusta si usas otra clase) */
+
+/* En móviles, puedes ocultarlo y usar todo el ancho */
+@media (max-width: 900px){
+  .hero-layout { grid-template-columns: 1fr; }
+  .Sidebar { display: none; }
+}
+
+
+.main {
+  width: 100%;
+  min-width: 0;                      /* evita que el main “rompa” el grid */
+  background: #f5f5f5;
+  padding: 20px;
+}
+
+/* ===== GRID de productos (UNA sola definición) ===== */
+/* Elimina tu bloque anterior con: grid-template-columns: repeat(4, 1fr) */
+.product-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* rellena sin huecos */
+  gap: 1.25rem;
+  width: 100%;
+  align-items: stretch;  /* las cards ocupan el alto de su track */
+}
+
+/* Asegura que las cards se adapten SIN tocar Card.css */
+.product-list .product-card {
+  max-width: none;   /* por si la card tuviera un tope */
+  min-width: 0;      /* permite encoger dentro del grid */
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+/* ===== Imagen dentro de la card (override suave) ===== */
+/* Borra el bloque viejo que forzaba 150x150 en Main.css.
+   Este override respeta tu altura fija (180px) de la card y evita doble fondo. */
+.product-list .product-card .product-image { height: 180px; }
+.product-list .product-card .product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;      /* sin recortar, mantiene proporción */
+  background: var(--gris-hover);
+  display: block;
+}
+
+/* ===== Paginación ===== */
+.pagination {
+  display: flex; justify-content: center; align-items: center;
+  gap: .75rem; margin: 2rem 0;
+}
+.pagination button {
+  background: var(--azul-principal, #00699e);
+  color: #fff; border: none; padding: .45rem .8rem;
+  border-radius: 6px; cursor: pointer;
+}
+.pagination button:disabled { background: #ccc; cursor: not-allowed; }
