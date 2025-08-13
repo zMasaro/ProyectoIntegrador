@@ -2,6 +2,8 @@ import { useEffect, useState, useCallback, useMemo } from 'react';
 import { obtenerProductosPorBusqueda } from '../services/zoho.ts';
 import ProductCard from '../components/ProductCard.jsx';
 import Sidebar from '../components/Sidebar.jsx';
+import Navbar from '../components/Navbar.jsx'; 
+import logo from '../img/InjaconLogo.png'; // Asegúrate de que la ruta sea correcta
 import '../styles/Main.css';
 
 function Main() {
@@ -111,26 +113,12 @@ function Main() {
 
   return (
     <section className="main-container">{/* <- className */}
-      <header className="headerMain">
-        <div className="nav-content">
-          <input
-            type="text"
-            placeholder="Buscar productos Epson (ej: L3110, EcoTank, tintas, cartuchos...)"
-            value={busqueda}
-            onChange={(e) => {
-              const valor = e.target.value;
-              setBusqueda(valor);
-              filtrarProductos(filtrosCheckbox);
-            }}
-            className="search-input"
-          />
-          {busqueda && (
-            <p className="filter-info">
-              {productosFiltrados.length} productos encontrados <strong>"{busqueda}"</strong>
-            </p>
-          )}
-        </div>
-      </header>
+      <Navbar
+      query={busqueda}
+      results={productosFiltrados.length}
+      onQueryChange={(valor) => setBusqueda(valor)}
+      logoSrc={logo} 
+     />
 
       <section className="hero-layout">
         <Sidebar className="Sidebar" categoriasFiltradas={filtrarProductos} />{/* <- className */}
