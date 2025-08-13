@@ -143,16 +143,18 @@ function Main() {
                 {pageItems.map((producto) => (
                   <ProductCard
                     key={producto.item_id}
-                    itemId={producto.item_id}
-                    sku={producto.sku}
-                    name={producto.name}
-                    description={producto.description}
-                    price={producto.rate}
-                    productCategory={producto.product_category}
-                    stock_on_hand={producto.stock_on_hand}
-                    status={producto.status}
-                    brand={producto.brand}
-                    manufacturer={producto.manufacturer}
+                    producto={{
+                      itemId: producto.item_id,
+                      sku: producto.sku,
+                      name: producto.name,
+                      description: producto.description,
+                      price: producto.rate,
+                      productCategory: producto.product_category,
+                      stock_on_hand: producto.stock_on_hand,
+                      status: producto.status,
+                      brand: producto.brand,
+                      manufacturer: producto.manufacturer
+                    }}
                   />
                 ))}
               </section>
