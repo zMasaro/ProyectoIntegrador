@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import BrandFilter from '../components/BrandFilter';
+import BrandFilter from './BrandFilter';
 import '../styles/Sidebar.css';
 import { FaSearch } from 'react-icons/fa';
 
