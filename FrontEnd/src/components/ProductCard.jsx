@@ -101,7 +101,7 @@ function ProductCard({ producto, onProductClick }) {
           <div className="product-info">
             {producto.price && (
               <span className="product-price">
-                {formatearPrecio(producto.price)} <br />
+                {formatearPrecio(producto.price * 1.13)} <br />
               </span>
             )}
 

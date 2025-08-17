@@ -79,6 +79,7 @@ body {
 }
 
 .product-description {
+  -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
   display: -webkit-box;
   overflow: hidden;
