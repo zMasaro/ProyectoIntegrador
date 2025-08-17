@@ -5,7 +5,10 @@ export default function Navbar({
   query = "",
   results = 0,
   onQueryChange = () => {},
-   logoSrc="/img/InjaconLogo.png"                    
+   logoSrc="/img/InjaconLogo.png",
+   roll=null,
+   onRegisterClick = () => {}  
+                    
 }) {
   return (
     <nav className="ep-nav" role="navigation" aria-label="Catálogo Epson">
@@ -36,9 +39,12 @@ export default function Navbar({
             Ver PDFs de impresoras
           </button>
 
-          <button type="button" className="ep-btn ep-btn--primary">
-            Registrar usuarios
-          </button>
+          {/*  Solo mostrar si rol === 1 */}
+          {rol === 1 && (
+            <button type="button" className="ep-btn ep-btn--primary" onClick={onRegisterClick}>
+              Registrar usuarios
+            </button>
+          )}
 
           {query && (
             <span className="ep-nav__results-pill">{results} resultados</span>
