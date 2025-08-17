@@ -6,7 +6,7 @@ export default function Navbar({
   results = 0,
   onQueryChange = () => {},
    logoSrc="/img/InjaconLogo.png",
-   roll=null,
+   rol=null,
    onRegisterClick = () => {}  
                     
 }) {
