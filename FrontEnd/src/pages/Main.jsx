@@ -1,10 +1,13 @@
 import { useEffect, useState, useCallback, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { obtenerProductosPorBusqueda } from '../services/zoho.ts';
 import ProductCard from '../components/ProductCard.jsx';
 import Sidebar from '../components/Sidebar.jsx';
 import Navbar from '../components/Navbar.jsx'; 
 import logo from '../img/InjaconLogo.png'; // Asegúrate de que la ruta sea correcta
+import ProductModal from '../components/ProductModal.jsx';
 import '../styles/Main.css';
+
 
 function Main() {
   const [productos, setProductos] = useState([]);
@@ -18,6 +21,14 @@ function Main() {
   const [page, setPage] = useState(1);
   const perPage = 12;
   const totalPages = Math.max(1, Math.ceil(productosFiltrados.length / perPage));
+
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleProductClick = (producto) => {
+    setSelectedProduct(producto);
+    setShowModal(true);
+  };
 
   const cargarProductos = async () => {
     setLoading(true);
@@ -80,6 +91,16 @@ function Main() {
     setProductosFiltrados(resultadosFiltrados);
   }, [productos, busqueda, filtrosCheckbox]);
 
+   const navigate = useNavigate();
+  const [rol, setRol] = useState(null);
+  
+  useEffect(() => {
+   const storedRol = localStorage.getItem("rol");
+   if (storedRol) {
+    setRol(parseInt(storedRol)); // lo guardamos como número
+   }
+   }, []);
+
   // Carga inicial
   useEffect(() => { cargarProductos(); }, []);
 
@@ -118,6 +139,8 @@ function Main() {
       results={productosFiltrados.length}
       onQueryChange={(valor) => setBusqueda(valor)}
       logoSrc={logo} 
+      rol={rol}
+      onRegisterClick={() => navigate('/signup')} // Redirige a SignUp
      />
 
       <section className="hero-layout">
@@ -155,9 +178,17 @@ function Main() {
                       brand: producto.brand,
                       manufacturer: producto.manufacturer
                     }}
+                    onProductClick={handleProductClick}
                   />
                 ))}
               </section>
+
+              {showModal && selectedProduct && (
+                <ProductModal 
+                  producto={selectedProduct}
+                  onClose={() => setShowModal(false)}
+                />
+              )}
 
               {/* Controles de paginado */}
               <div className="pagination">

@@ -1,11 +1,14 @@
 import React from "react";
-import "../styles/Navbar.css"; // estilos con clases únicas ep-*
+import "../styles/Navbar.css"; 
 
 export default function Navbar({
   query = "",
   results = 0,
   onQueryChange = () => {},
-   logoSrc="/img/InjaconLogo.png"                    // opcional: ruta del logo
+   logoSrc="/img/InjaconLogo.png",
+   roll=null,
+   onRegisterClick = () => {}  
+                    
 }) {
   return (
     <nav className="ep-nav" role="navigation" aria-label="Catálogo Epson">
@@ -14,8 +17,7 @@ export default function Navbar({
         <div className="ep-nav__left">
           {logoSrc
             ? <img src={logoSrc} alt="Logo" className="ep-nav__logo" />
-            : <span className="ep-nav__brand-icon" aria-hidden>🖨️</span>}
-          <span className="ep-nav__brand-name">Inventario</span>
+            : <span className="ep-nav__brand-icon" aria-hidden></span>}
         </div>
 
         {/* Centro (por si luego agregas chips/tags) */}
@@ -37,9 +39,12 @@ export default function Navbar({
             Ver PDFs de impresoras
           </button>
 
-          <button type="button" className="ep-btn ep-btn--primary">
-            Registrar usuarios
-          </button>
+          {/*  Solo mostrar si rol === 1 */}
+          {rol === 1 && (
+            <button type="button" className="ep-btn ep-btn--primary" onClick={onRegisterClick}>
+              Registrar usuarios
+            </button>
+          )}
 
           {query && (
             <span className="ep-nav__results-pill">{results} resultados</span>
