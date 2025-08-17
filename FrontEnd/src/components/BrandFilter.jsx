@@ -42,7 +42,10 @@ function BrandFilter({ categories, onChange }) {
 
       {categories.map((category, i) => (
         <div className="sb-filter-group" key={i}>
-          <h4 className="sb-filter-title">{category.title}</h4>
+          <h4 className="sb-filter-title">
+          {category.icon && <span className="sb-filter-icon">{category.icon}</span>}
+         {category.title}
+        </h4>
           <ul className="sb-filter-list">
             {category.options
               .filter(opt => opt.toLowerCase().includes(searchTerm))
