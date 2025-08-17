@@ -191,3 +191,19 @@
   height: 38px;
   opacity: 0.5;
 }
+
+.product-name-button {
+  background: none;
+  border: none;
+  color: #0066cc;
+  cursor: pointer;
+  font-size: 1em;
+  padding: 0;
+  text-align: left;
+  text-decoration: underline;
+  width: 100%;
+}
+
+.product-name-button:hover {
+  color: #004999;
+}

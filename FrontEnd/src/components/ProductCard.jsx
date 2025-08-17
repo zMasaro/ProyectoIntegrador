@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import '../styles/Card.css';
 
-function ProductCard({ producto }) {
+function ProductCard({ producto, onProductClick }) {
   //const { itemId, sku, name, description, price } = producto;
 
   //Control de errores de imagen
@@ -61,12 +61,18 @@ function ProductCard({ producto }) {
         <div className="product-header">
 
 
-          <Link
+          {/*<Link
             to="/producto"
             state={{ producto }}
           >
             {producto.name || 'Producto sin nombre'}
-          </Link>
+          </Link>*/}
+          <button 
+            className="product-name-button"
+            onClick={() => onProductClick(producto)}
+          >
+            {producto.name || 'Producto sin nombre'}
+          </button>
 
           {producto.itemId && (
             <span className="product-sku">Item id: {producto.itemId} <br /></span>
