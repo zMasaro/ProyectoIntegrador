@@ -43,9 +43,6 @@ export default function Navbar({
             onChange={(e) => onQueryChange(e.target.value)}
           />
 
-          <button type="button" className="ep-btn ep-btn--outline">
-            Ver PDFs de impresoras
-          </button>
 
           {rol === 1 && (
             <button
