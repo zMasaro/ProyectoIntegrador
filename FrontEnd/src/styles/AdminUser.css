@@ -1,0 +1,108 @@
+/* Tabla principal */
+.adm-table-container {
+  width: 100%;
+  overflow-x: auto; /* Por si algún contenido se pasa, habilita scroll horizontal solo cuando sea necesario */
+}
+
+.adm-table {
+  width: 100%;
+  max-width: 100%; /* Nunca se saldrá del contenedor */
+  table-layout: fixed; /* Distribuye el ancho de manera uniforme entre columnas */
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+}
+
+.adm-table th,
+.adm-table td {
+  padding: 0.75rem 0.8rem;
+  text-align: left;
+  word-wrap: break-word; /* Evita que el contenido se desborde */
+}
+
+/* Resto de tu CSS existente */
+.adm-table thead {
+  background-color: #1976d2;
+  color: white;
+}
+
+.adm-table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.adm-table tbody tr:hover {
+  background-color: #e3f2fd;
+}
+
+/* Botones */
+.adm-btn {
+  padding: 0.4rem 0.8rem;
+  margin-right: 0.4rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  min-width: 120px; /* ancho mínimo uniforme */
+  text-align: center;
+}
+
+.adm-btn-cambiar {
+  background-color: #ffb300;
+  color: white;
+}
+
+.adm-btn-cambiar:hover {
+  background-color: #ffa000;
+}
+
+.adm-btn-eliminar {
+  background-color: #d32f2f;
+  color: white;
+}
+
+.adm-btn-eliminar:hover {
+  background-color: #b71c1c;
+}
+
+/* ---- Responsive ---- */
+@media screen and (max-width: 768px) {
+  .adm-table thead {
+    display: none;
+  }
+
+  .adm-table,
+  .adm-table tbody,
+  .adm-table tr,
+  .adm-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .adm-table tr {
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 0.5rem;
+  }
+
+  .adm-table td {
+    padding: 0.5rem;
+    text-align: right;
+    position: relative;
+  }
+
+  .adm-table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 50%;
+    padding-left: 0.5rem;
+    font-weight: bold;
+    text-align: left;
+  }
+
+  .adm-btn {
+    width: 48%;
+    margin: 0.2rem 1% 0.2rem 0;
+  }
+}
