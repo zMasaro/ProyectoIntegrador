@@ -1,70 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;700&display=swap');
+
+:root {
+  --azul-principal: #00699e;
+  --azul-hover: #274885;
+  --verde-lima: #c1d72e;
+  --verde-lima2: #9bb10e;
+  --verde-oscuro: #5b8501;
+  --azul-oscuro: #091337;
+  --gris-claro: #e5e7eb;
+  --gris-hover: #f3f4f6;
+  --negro: #222;
+  --blanco: #fff;
+  --shadow: 0 4px 24px rgba(0,0,0,0.07);
+  --radius: 14px;
+}
+
 /* Tabla principal */
 .adm-table-container {
   width: 100%;
-  overflow-x: auto; /* Por si algún contenido se pasa, habilita scroll horizontal solo cuando sea necesario */
+  overflow-x: auto;
+  background: var(--gris-hover);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px 10px;
 }
 
 .adm-table {
   width: 100%;
-  max-width: 100%; /* Nunca se saldrá del contenedor */
-  table-layout: fixed; /* Distribuye el ancho de manera uniforme entre columnas */
+  max-width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
-  font-family: Arial, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background: var(--blanco);
+  border-radius: var(--radius);
+  overflow: hidden;
 }
 
 .adm-table th,
 .adm-table td {
-  padding: 0.75rem 0.8rem;
+  padding: 0.85rem 1rem;
   text-align: left;
-  word-wrap: break-word; /* Evita que el contenido se desborde */
+  word-wrap: break-word;
+  font-size: 15px;
 }
 
-/* Resto de tu CSS existente */
 .adm-table thead {
-  background-color: #1976d2;
-  color: white;
+  background: linear-gradient(90deg, var(--azul-principal) 0%, var(--azul-hover) 100%);
+  color: var(--blanco);
+}
+
+.adm-table th {
+  font-weight: 700;
+  letter-spacing: .5px;
+  border-bottom: 2px solid var(--verde-lima);
 }
 
 .adm-table tbody tr:nth-child(even) {
-  background-color: #f2f2f2;
+  background-color: var(--gris-claro);
 }
 
 .adm-table tbody tr:hover {
-  background-color: #e3f2fd;
+  background-color: var(--verde-lima);
+  color: var(--azul-oscuro);
+  transition: background .15s, color .15s;
 }
 
 /* Botones */
 .adm-btn {
-  padding: 0.4rem 0.8rem;
+  padding: 0.5rem 1.1rem;
   margin-right: 0.4rem;
-  border: none;
-  border-radius: 6px;
+  border: 1px solid var(--azul-oscuro);
+  border-radius: 10px;
   cursor: pointer;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
-  min-width: 120px; /* ancho mínimo uniforme */
+  font-size: 1rem;
+  font-weight: 600;
   text-align: center;
+  background: var(--azul-oscuro);
+  color: var(--blanco);
+  transition: transform .15s, box-shadow .15s, background .15s, border-color .15s, color .15s;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .adm-btn-cambiar {
-  background-color: #ffb300;
-  color: white;
+  background-color: var(--verde-lima);
+  color: var(--azul-oscuro);
+  border-color: var(--verde-lima2);
 }
 
 .adm-btn-cambiar:hover {
-  background-color: #ffa000;
+  background-color: var(--verde-oscuro);
+  color: var(--blanco);
+  border-color: var(--verde-oscuro);
 }
 
 .adm-btn-eliminar {
-  background-color: #d32f2f;
-  color: white;
+  background-color: #dc3545;
+  color: var(--blanco);
+  border-color: #b52d3a;
 }
 
 .adm-btn-eliminar:hover {
-  background-color: #b71c1c;
+  background-color: #b52d3a;
+  color: var(--blanco);
 }
 
-/* ---- Responsive ---- */
+
 @media screen and (max-width: 768px) {
   .adm-table thead {
     display: none;
@@ -80,16 +120,20 @@
 
   .adm-table tr {
     margin-bottom: 1rem;
-    border: 1px solid #ddd;
+    border: 1px solid var(--gris-claro);
     border-radius: 8px;
     padding: 0.5rem;
+    background: var(--blanco);
+    box-shadow: var(--shadow);
   }
 
-  .adm-table td {
-    padding: 0.5rem;
-    text-align: right;
-    position: relative;
-  }
+.adm-table th,
+.adm-table td {
+  padding: 1.2rem 1.4rem; /* Aumenta el espacio interno */
+  text-align: left;
+  word-wrap: break-word;
+  font-size: 17px;        /* Texto más grande */
+}
 
   .adm-table td::before {
     content: attr(data-label);
@@ -99,10 +143,11 @@
     padding-left: 0.5rem;
     font-weight: bold;
     text-align: left;
+    color: var(--azul-oscuro);
   }
 
   .adm-btn {
     width: 48%;
-    margin: 0.2rem 1% 0.2rem 0;
+    margin: 0.2rem 1% 0;
   }
 }

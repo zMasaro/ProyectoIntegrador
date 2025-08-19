@@ -1,120 +1,175 @@
+/* Importa la fuente del proyecto */
+@import url('https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;700&display=swap');
+
+:root {
+  --azul-principal: #00699e;
+  --azul-hover: #274885;
+  --verde-lima: #c1d72e;
+  --verde-lima2: #9bb10e;
+  --verde-oscuro: #5b8501;
+  --azul-oscuro: #091337;
+  --gris-claro: #e5e7eb;
+  --gris-hover: #f3f4f6;
+  --negro: #222;
+  --blanco: #fff;
+  --shadow: 0 4px 24px rgba(0,0,0,0.07);
+  --radius: 16px;
+}
+
+/* Fondo modal con degradado y sombra suave */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.55);
+  /* Cambia el fondo a degradado azul INJACOM */
+  background: linear-gradient(120deg, var(--azul-principal) 0%, var(--azul-hover) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 999;
 }
 
-
+/* Contenido modal con bordes y sombra del proyecto */
 .modal-content {
-  background: #fff;
-  border-radius: 12px;
-  padding: 20px;
-  width: 800px;
-  max-width: 95%;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  background: var(--blanco);
+  border-radius: var(--radius);
+  padding: 40px 36px; /* Más espacio interno */
+  width: 900px;       /* Más ancho */
+  max-width: 99vw;
+  box-shadow: var(--shadow);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   animation: fadeIn 0.3s ease-in-out;
+  position: relative;
 }
 
-
+/* Header con color y borde inferior */
 .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid #eaeaea;
-  padding-bottom: 10px;
-  margin-bottom: 15px;
+  border-bottom: 2px solid var(--verde-lima);
+  padding-bottom: 12px;
+  margin-bottom: 18px;
 }
 
 .modal-header h5 {
   margin: 0;
-  font-size: 20px;
-  font-weight: bold;
-  color: #0d3b66; 
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--azul-oscuro);
+  letter-spacing: .5px;
 }
 
-
+/* Botón de cerrar con color y hover */
 .modal-close {
-  
- position: absolute;
-  top: 10px;
-  right: 10px;
+  position: absolute;
+  top: 18px;
+  right: 18px;
   border: none;
-  background: none;
-  font-size: 24px;
+  background: var(--gris-hover);
+  color: var(--azul-oscuro);
+  font-size: 26px;
   cursor: pointer;
-  padding: 5px;
+  border-radius: 50%;
+  padding: 6px 10px;
+  transition: background .15s, color .15s;
 }
-
 
 .modal-close:hover {
-  background:none;
+  background: var(--verde-lima);
+  color: var(--blanco);
 }
 
+/* Cuerpo del modal */
 .modal-body {
   font-size: 16px;
-  color: #333;
-  line-height: 1.5;
+  color: var(--negro);
+  line-height: 1.6;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-
-
-/* Estilos para la tabla de usuarios */
+/* Tabla de usuarios con colores del proyecto */
 .modal-body table {
   width: 100%;
   border-collapse: collapse;
+  background: var(--gris-hover);
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .modal-body th,
 .modal-body td {
-  padding: 10px;
+  padding: 12px;
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--gris-claro);
 }
 
 .modal-body th {
-  background-color: #0d3b66;
-  color: #fff;
+  background-color: var(--azul-oscuro);
+  color: var(--blanco);
   font-weight: bold;
+  font-size: 15px;
 }
 
 .modal-body tr:nth-child(even) {
-  background-color: #f9f9f9;
+  background-color: var(--gris-claro);
 }
 
-/* Estilo para los botones dentro del modal */
+/* Botones dentro del modal con estilo del proyecto */
 .modal-body button {
-  margin-right: 8px;
-  margin-top: 4px;
-  padding: 8px 14px;
-  border: none;
-  border-radius: 8px;
+  margin-right: 10px;
+  margin-top: 6px;
+  padding: 9px 18px;
+  border: 1px solid var(--azul-oscuro);
+  border-radius: 10px;
   cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  transition: all 0.2s ease-in-out;
+  font-size: 15px;
+  font-weight: 600;
+  background: var(--azul-oscuro);
+  color: var(--blanco);
+  transition: background .15s, border-color .15s, color .15s, box-shadow .15s;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+.modal-body button:hover {
+  background: var(--azul-hover);
+  border-color: var(--azul-hover);
+  color: var(--blanco);
+  box-shadow: 0 6px 16px rgba(79,140,255,.18);
+}
+
+/* Botón de acción positiva */
 .modal-body button:first-child {
-  background-color: #198754; 
-  color: white;
+  background-color: var(--verde-lima);
+  color: var(--blanco);
+  border-color: var(--verde-lima);
+  box-shadow: none;
+  font-weight: 700;
 }
 
 .modal-body button:first-child:hover {
-  background-color: #146c43;
+  background-color: var(--verde-oscuro);
+  color: var(--blanco);
+  border-color: var(--verde-oscuro);
+  box-shadow: none;
 }
 
+/* Botón de acción negativa */
 .modal-body button:last-child {
-  background-color: #dc3545; 
-  color: white;
+  background-color: #dc3545;
+  color: var(--blanco);
+  border-color: #b52d3a;
 }
 
 .modal-body button:last-child:hover {
   background-color: #b52d3a;
+  color: var(--blanco);
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.98);}
+  to { opacity: 1; transform: scale(1);}
 }
