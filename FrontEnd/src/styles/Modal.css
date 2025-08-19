@@ -1,108 +1,175 @@
-/* Tabla principal */
-.adm-table-container {
-  width: 100%;
-  overflow-x: auto; /* Por si algún contenido se pasa, habilita scroll horizontal solo cuando sea necesario */
+/* Importa la fuente del proyecto */
+@import url('https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;700&display=swap');
+
+:root {
+  --azul-principal: #00699e;
+  --azul-hover: #274885;
+  --verde-lima: #c1d72e;
+  --verde-lima2: #9bb10e;
+  --verde-oscuro: #5b8501;
+  --azul-oscuro: #091337;
+  --gris-claro: #e5e7eb;
+  --gris-hover: #f3f4f6;
+  --negro: #222;
+  --blanco: #fff;
+  --shadow: 0 4px 24px rgba(0,0,0,0.07);
+  --radius: 16px;
 }
 
-.adm-table {
-  width: 100%;
-  max-width: 100%; /* Nunca se saldrá del contenedor */
-  table-layout: fixed; /* Distribuye el ancho de manera uniforme entre columnas */
-  border-collapse: collapse;
-  font-family: Arial, sans-serif;
+/* Fondo modal con degradado y sombra suave */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  /* Cambia el fondo a degradado azul INJACOM */
+  background: linear-gradient(120deg, var(--azul-principal) 0%, var(--azul-hover) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
 }
 
-.adm-table th,
-.adm-table td {
-  padding: 0.75rem 0.8rem;
-  text-align: left;
-  word-wrap: break-word; /* Evita que el contenido se desborde */
+/* Contenido modal con bordes y sombra del proyecto */
+.modal-content {
+  background: var(--blanco);
+  border-radius: var(--radius);
+  padding: 40px 36px; /* Más espacio interno */
+  width: 900px;       /* Más ancho */
+  max-width: 99vw;
+  box-shadow: var(--shadow);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  animation: fadeIn 0.3s ease-in-out;
+  position: relative;
 }
 
-/* Resto de tu CSS existente */
-.adm-table thead {
-  background-color: #1976d2;
-  color: white;
+/* Header con color y borde inferior */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--verde-lima);
+  padding-bottom: 12px;
+  margin-bottom: 18px;
 }
 
-.adm-table tbody tr:nth-child(even) {
-  background-color: #f2f2f2;
+.modal-header h5 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--azul-oscuro);
+  letter-spacing: .5px;
 }
 
-.adm-table tbody tr:hover {
-  background-color: #e3f2fd;
-}
-
-/* Botones */
-.adm-btn {
-  padding: 0.4rem 0.8rem;
-  margin-right: 0.4rem;
+/* Botón de cerrar con color y hover */
+.modal-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
   border: none;
-  border-radius: 6px;
+  background: var(--gris-hover);
+  color: var(--azul-oscuro);
+  font-size: 26px;
   cursor: pointer;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
-  min-width: 120px; /* ancho mínimo uniforme */
-  text-align: center;
+  border-radius: 50%;
+  padding: 6px 10px;
+  transition: background .15s, color .15s;
 }
 
-.adm-btn-cambiar {
-  background-color: #ffb300;
-  color: white;
+.modal-close:hover {
+  background: var(--verde-lima);
+  color: var(--blanco);
 }
 
-.adm-btn-cambiar:hover {
-  background-color: #ffa000;
+/* Cuerpo del modal */
+.modal-body {
+  font-size: 16px;
+  color: var(--negro);
+  line-height: 1.6;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-.adm-btn-eliminar {
-  background-color: #d32f2f;
-  color: white;
+/* Tabla de usuarios con colores del proyecto */
+.modal-body table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--gris-hover);
+  border-radius: 10px;
+  overflow: hidden;
 }
 
-.adm-btn-eliminar:hover {
-  background-color: #b71c1c;
+.modal-body th,
+.modal-body td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--gris-claro);
 }
 
-/* ---- Responsive ---- */
-@media screen and (max-width: 768px) {
-  .adm-table thead {
-    display: none;
-  }
+.modal-body th {
+  background-color: var(--azul-oscuro);
+  color: var(--blanco);
+  font-weight: bold;
+  font-size: 15px;
+}
 
-  .adm-table,
-  .adm-table tbody,
-  .adm-table tr,
-  .adm-table td {
-    display: block;
-    width: 100%;
-  }
+.modal-body tr:nth-child(even) {
+  background-color: var(--gris-claro);
+}
 
-  .adm-table tr {
-    margin-bottom: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 0.5rem;
-  }
+/* Botones dentro del modal con estilo del proyecto */
+.modal-body button {
+  margin-right: 10px;
+  margin-top: 6px;
+  padding: 9px 18px;
+  border: 1px solid var(--azul-oscuro);
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  background: var(--azul-oscuro);
+  color: var(--blanco);
+  transition: background .15s, border-color .15s, color .15s, box-shadow .15s;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
 
-  .adm-table td {
-    padding: 0.5rem;
-    text-align: right;
-    position: relative;
-  }
+.modal-body button:hover {
+  background: var(--azul-hover);
+  border-color: var(--azul-hover);
+  color: var(--blanco);
+  box-shadow: 0 6px 16px rgba(79,140,255,.18);
+}
 
-  .adm-table td::before {
-    content: attr(data-label);
-    position: absolute;
-    left: 0;
-    width: 50%;
-    padding-left: 0.5rem;
-    font-weight: bold;
-    text-align: left;
-  }
+/* Botón de acción positiva */
+.modal-body button:first-child {
+  background-color: var(--verde-lima);
+  color: var(--blanco);
+  border-color: var(--verde-lima);
+  box-shadow: none;
+  font-weight: 700;
+}
 
-  .adm-btn {
-    width: 48%;
-    margin: 0.2rem 1% 0.2rem 0;
-  }
+.modal-body button:first-child:hover {
+  background-color: var(--verde-oscuro);
+  color: var(--blanco);
+  border-color: var(--verde-oscuro);
+  box-shadow: none;
+}
+
+/* Botón de acción negativa */
+.modal-body button:last-child {
+  background-color: #dc3545;
+  color: var(--blanco);
+  border-color: #b52d3a;
+}
+
+.modal-body button:last-child:hover {
+  background-color: #b52d3a;
+  color: var(--blanco);
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.98);}
+  to { opacity: 1; transform: scale(1);}
 }
