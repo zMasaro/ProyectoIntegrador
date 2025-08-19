@@ -47,23 +47,25 @@ export default function Navbar({
             Ver PDFs de impresoras
           </button>
 
-          {rol === 1 && (
-            <button
-              type="button"
-              className="ep-btn ep-btn--primary"
-              onClick={onRegisterClick}
-            >
-              Registrar usuarios
-            </button>
+           {rol === 1 && (
+            <>
+              <button
+                type="button"
+                className="ep-btn ep-btn--primary"
+                onClick={onRegisterClick}
+              >
+                Registrar usuarios
+              </button>
+              <button
+                type="button"
+                className="ep-btn ep-btn--outline"
+                onClick={onAdministrarClick}
+              >
+                Administrar Usuarios
+              </button>
+            </>
           )}
-
-          <button
-            type="button"
-            className="ep-btn ep-btn--outline"
-            onClick={onAdministrarClick}
-          >
-            Administrar Usuarios
-          </button>
+          
           {rol && <LogoutButton />}
 
 
