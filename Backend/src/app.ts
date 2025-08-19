@@ -19,6 +19,9 @@ import encryptionRoutes from './routes/encryption.routes';
 import { initializeTokenRefresh } from './config/zoho.config';
 import loginRoutes from './routes/login.routes';
 import registerRoutes from './routes/register.routes';
+import adminUserRoutes from "./routes/adminUser.routes";
+import logouteRoutes from "./routes/logout.routes";
+
 
 
 // Crear instancia de la aplicación Express
@@ -61,6 +64,8 @@ app.get("/api/check-session", (req, res) => {
 
 app.use('/api', loginRoutes);
 app.use('/api', registerRoutes);
+app.use('/api', adminUserRoutes);
+app.use('/api', logouteRoutes);
 
 // Puerto del servidor (por defecto 3001)
 const PORT = process.env.PORT || 3001;
