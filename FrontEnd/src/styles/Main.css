@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;700&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --azul-principal: #00699e;
+  --azul-hover: #274885;
+  --verde-lima: #c1d72e;
+  --verde-lima2: #9bb10e;
+  --verde-oscuro: #5b8501;
+  --azul-oscuro: #091337;
+  --gris-claro: #e5e7eb;
+  --gris-hover: #f3f4f6;
+  --negro: #222;
+  --blanco: #fff;
+  --shadow: 0 4px 24px rgba(0,0,0,0.07);
+  --radius: 16px;
+  --header-h: 64px;
+}
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* Ahora: que la 1ª columna tome el ancho del contenido del Sidebar */
+.hero-layout {
+  display: grid;
+  grid-template-columns: auto 1fr;   /* <- clave */
+  gap: 1rem;
+  width: 100%;
+  flex: 1;
+}
+
+/* Si quieres forzar tamaños cuando está expandido vs colapsado: */
+.Sidebar { width: 260px; }            /* expandido */
+.Sidebar.is-collapsed { width: 56px; }/* colapsado (ajusta si usas otra clase) */
+
+/* En móviles, puedes ocultarlo y usar todo el ancho */
+@media (max-width: 900px){
+  .hero-layout { grid-template-columns: 1fr; }
+  .Sidebar { display: none; }
+}
+
+
+.main {
+  width: 100%;
+  min-width: 0;                      /* evita que el main “rompa” el grid */
+  background:#ffffff;;
+  padding: 20px;;
+}
+
+/* ===== GRID de productos (UNA sola definición) ===== */
+/* Elimina tu bloque anterior con: grid-template-columns: repeat(4, 1fr) */
+.product-list {
+  
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* rellena sin huecos */
+  gap: 1.25rem;
+  width: 100%;
+  align-items: stretch;  /* las cards ocupan el alto de su track */
+}
+
+/* Asegura que las cards se adapten SIN tocar Card.css */
+.product-list .product-card {
+  max-width: none;   /* por si la card tuviera un tope */
+  min-width: 0;      /* permite encoger dentro del grid */
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.product-name {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  overflow: hidden;
+}
+
+.product-description {
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  overflow: hidden;
+  flex: 1;
+}
+
+/* ===== Paginación ===== */
+.pagination {
+  display: flex; justify-content: center; align-items: center;
+  gap: .75rem; margin: 2rem 0;
+}
+.pagination button {
+  background: var(--azul-principal, #00699e);
+  color: #fff; border: none; padding: .45rem .8rem;
+  border-radius: 6px; cursor: pointer;
+}
+.pagination button:disabled { background: #ccc; cursor: not-allowed; }
+
+.product-card a {
+  color: var(--azul-principal);
+  text-decoration: none;
+  font-weight: 600;
+  position: relative;
+  transition: color 0.2s;
+}
+.product-card a::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 2px;
+  background: var(--azul-principal);
+  transition: width 0.3s;
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+}
+.product-card a:hover {
+  color: var(--azul-hover);
+}
+.product-card a:hover::after {
+  width: 100%;
+  background: var(--azul-hover);
+}

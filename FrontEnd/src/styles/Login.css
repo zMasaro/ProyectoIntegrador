@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;700&display=swap');
+
+:root {
+  --azul-principal: #00699e;
+  --verde-lima: #c1d72e;
+  --azul-oscuro: #091337;
+  --gris-claro: #939597;
+  --negro: #000000;
+  --blanco: #fff;
+  --azul-clarito: #5aa4c9;
+}
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: auto; 
+  margin-top: 100px; 
+  background-color: var(--blanco); 
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+form {
+  background-color: var(--blanco);
+  padding: 2rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+h3 {
+  text-align: left; 
+  font-size: 24px;
+  color: var(--azul-principal); 
+  margin-bottom: -6px; 
+  margin-left: -240px; 
+}
+
+
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  font-size: 16px;
+  color: var(--gris-claro);
+  border-radius: 5px;
+}
+
+#save-button {
+  background-color: var(--azul-principal); 
+  color: var(--blanco); 
+  padding: 12px;
+  border: none;
+  width: 100%;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; 
+  border-radius: 5px;
+}
+
+#save-button:hover {
+  background-color: var(--azul-oscuro); 
+}
+
+img {
+  max-width: 80%;
+  height: auto; 
+  margin-bottom: 20px;
+}
