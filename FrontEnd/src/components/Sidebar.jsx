@@ -1,27 +1,32 @@
 import { useState } from 'react';
 import BrandFilter from './BrandFilter';
 import '../styles/Sidebar.css';
-import { FaSearch } from 'react-icons/fa';
+import { FaSearch, FaCogs, FaWifi, FaTags } from 'react-icons/fa';
+import { MdPrint } from "react-icons/md";
 
 const categorias = [
   {
-    title: 'Modelo Epson',
+    title: 'MODELO EPSON',
     key: 'modelo',
+    icon: <MdPrint />,   
     options: ['EcoTank', 'WorkForce', 'Expression', 'SureColor'],
   },
   {
-    title: 'Tipo de Función',
+    title: 'TIPO DE FUNCIÓN',
     key: 'funcion',
+    icon: <FaCogs />,
     options: ['Multifunción', 'Escaner', 'Impresora'],
   },
   {
-    title: 'Conectividad',
+    title: 'CONECTIVIDAD',
     key: 'conectividad',
+    icon: <FaWifi />,
     options: ['Wi-Fi', 'USB', 'Bluetooth'],
   },
   {
-    title: 'Generales',
+    title: 'GENERALES',
     key: 'generales',
+    icon: <FaTags />,
     options: ['Tinta', 'Cartucho', 'Laser', 'Sublimación'],
   },
 ];

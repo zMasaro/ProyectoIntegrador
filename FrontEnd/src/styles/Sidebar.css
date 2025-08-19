@@ -5,9 +5,9 @@
   --azul-hover: #4f8cff;
   --verde-lima: #c1d72e;
   --azul-oscuro: #091337;
-  --azul-oscuro-trans: rgba(5, 17, 59, 0.644); /* azul oscuro translúcido */
-  --gris-claro: #e5e7eb;
-  --gris-hover: #f3f4f6;
+  --azul-oscuro-trans: rgba(105, 135, 241, 0.85);
+  --gris-claro: #f3f4f6;
+  --gris-hover: #e5e7eb;
   --negro: #222;
   --blanco: #fff;
   --shadow: 0 4px 24px rgba(0,0,0,0.07);
@@ -15,34 +15,23 @@
   --header-h: 0px;
 }
 
-body {
-  font-family: 'Helvetica Neue', sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: var(--gris-claro);
-  color: var(--negro);
-}
-
 /* Layout general */
-.sb-sidebar{
+.sb-sidebar {
   position: sticky;
-  top: var(--header-h);                 /* si tu header es fijo, pon su alto aquí */
-  align-self: start;                    /* necesario dentro de grid */
-  height: calc(100vh - var(--header-h));/* ocupa toda la ventana visible */
-  overflow: auto;   
-  background: var(--blanco);
-  color: var(--negro);                    /* scroll interno si hay mucho contenido */
-  /* el resto de tus reglas se queda igual */
+  top: var(--header-h);
+  align-self: start;
+  height: calc(100vh - var(--header-h));
+  overflow: auto;
+  background: var(--azul-oscuro);
+  color: var(--blanco);
 }
 
 /* Si usas expandido/colapsado, tus anchos funcionan con el grid auto 1fr */
 .sb-layout.sb-expanded .sb-sidebar { width: 260px; }
 .sb-layout.sb-collapsed .sb-sidebar { width: 60px; }
 
-/* Opcional: el wrapper no necesita forzar altura si ya haces sticky en .sb-sidebar */
-.sb-layout{
+.sb-layout {
   display: flex;
-  /* height: 100vh;  <-- puedes quitarlo; no es necesario con sticky */
 }
 
 /* Logo */
@@ -52,9 +41,10 @@ body {
   font-size: 1.3rem;
   text-align: center;
   background: none;
-  border-bottom: 1px solid var(--gris-claro);
+  border-bottom: 1px solid var(--gris-hover);
   margin-bottom: 2rem;
   letter-spacing: 1px;
+  color: var(--blanco);
 }
 
 /* Menú principal */
@@ -71,19 +61,16 @@ body {
   padding: 0.8rem 1.2rem;
   border-radius: 12px;
   font-size: 1.08rem;
-  color: var(--azul-oscuro);
+  color: var(--blanco);
   cursor: pointer;
   position: relative;
   background: transparent;
-  transition: 
-    background 0.2s,
-    color 0.2s,
-    box-shadow 0.2s;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
 }
 
 .sb-menu-item:hover {
-  background: var(--gris-hover);
-  color: var(--azul-hover);
+  background: var(--azul-oscuro-trans);
+  color: var(--verde-lima);
   box-shadow: 0 2px 8px rgba(79,140,255,0.08);
 }
 
@@ -107,7 +94,7 @@ body {
 /* Iconos */
 .sb-menu-item .sb-icon {
   font-size: 1.5rem;
-  color: inherit;
+  color: var(--blanco);
   transition: color 0.2s;
 }
 
@@ -128,19 +115,21 @@ body {
 .sb-search-box input {
   width: 100%;
   padding: 0.7rem 1.1rem;
-  border: 1px solid var(--gris-claro);
+  border: 1px solid var(--gris-hover);
   margin-bottom: 1rem;
   border-radius: 10px;
   font-size: 1rem;
-  background: var(--gris-hover);
+  background: var(--blanco);
+  color: var(--azul-oscuro);
   transition: border 0.2s, box-shadow 0.2s;
   box-shadow: 0 2px 8px rgba(0,105,158,0.04);
 }
 
 .sb-search-box input:focus {
   outline: none;
-  border: 2px solid var(--azul-principal);
+  border: 2px solid var(--verde-lima);
   background: var(--blanco);
+  color: var(--azul-oscuro);
   box-shadow: 0 2px 12px rgba(0,105,158,0.10);
 }
 
@@ -152,7 +141,7 @@ body {
   font-weight: 700;
   margin-bottom: 0.5rem;
   font-size: 1rem;
-  color: var(--azul-oscuro);
+  color: var(--blanco);
 }
 
 .sb-filter-list {
@@ -169,12 +158,15 @@ body {
   padding: 0.4rem 1rem;
   border-radius: 3px;
   position: relative;
-  transition: background 0.2s, box-shadow 0.2s;
+  color: var(--blanco);
+  background: transparent;
+  transition: background 0.2s, box-shadow 0.2s, color 0.2s;
 }
 
 .sb-filter-item:hover {
-  background: var(--azul-oscuro-trans);
-  box-shadow: 0 2px 16px rgba(9,19,55,0.18);
+   background: #142563a8;      /* fondo más claro */
+  color: var(--azul-principal);       /* texto azul principal */
+  box-shadow: 0 2px 8px rgba(79,140,255,0.08);
 }
 
 .sb-filter-item:hover::before {
@@ -189,13 +181,13 @@ body {
 }
 
 .sb-filter-item input[type="checkbox"] {
-  accent-color: var(--azul-principal);
+  accent-color: var(--verde-lima);
   width: 18px;
   height: 18px;
   border-radius: 6px;
   transition: accent-color 0.2s, box-shadow 0.2s, border-color 0.2s;
   box-shadow: 0 2px 8px rgba(0,105,158,0.10);
-  border: 2px solid var(--gris-claro);
+  border: 2px solid var(--gris-hover);
 }
 
 .sb-filter-item input[type="checkbox"]:hover {
@@ -227,11 +219,17 @@ body {
 
 .sb-filter-item label {
   cursor: pointer;
-  color: var(--azul-oscuro);
+  color: var(--blanco);
   font-size: 1rem;
   font-weight: 500;
   transition: color 0.2s;
   letter-spacing: 0.5px;
   position: relative;
   padding-left: 0.5rem;
+
+}
+.sb-filter-icon {
+  font-size: 18px;
+  color: var(--blanco);
+   margin-right: 10px;
 }

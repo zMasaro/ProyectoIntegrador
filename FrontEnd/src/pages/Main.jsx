@@ -1,9 +1,13 @@
 import { useEffect, useState, useCallback, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { obtenerProductosPorBusqueda } from '../services/zoho.ts';
 import ProductCard from '../components/ProductCard.jsx';
 import Sidebar from '../components/Sidebar.jsx';
 import Navbar from '../components/Navbar.jsx'; 
-import logo from '../img/InjaconLogo.png'; // Asegúrate de que la ruta sea correcta
+import logo from '../img/InjaconLogo.png';
+import ProductModal from '../components/ProductModal.jsx';
+import RegisterModal from '../components/RegisterModal.jsx'; 
+import AdminUsers from '../components/AdminUsers.jsx';
 import '../styles/Main.css';
 
 function Main() {
@@ -14,10 +18,20 @@ function Main() {
   const [busqueda, setBusqueda] = useState('');
   const [filtrosCheckbox, setFiltrosCheckbox] = useState({});
 
-  // 🔹 Paginado
   const [page, setPage] = useState(1);
   const perPage = 12;
   const totalPages = Math.max(1, Math.ceil(productosFiltrados.length / perPage));
+
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
+  const [showRegisterModal, setShowRegisterModal] = useState(false);
+  const [showAdminUsersModal, setShowAdminUsersModal] = useState(false);
+
+  const handleProductClick = (producto) => {
+    setSelectedProduct(producto);
+    setShowModal(true);
+  };
 
   const cargarProductos = async () => {
     setLoading(true);
@@ -80,21 +94,25 @@ function Main() {
     setProductosFiltrados(resultadosFiltrados);
   }, [productos, busqueda, filtrosCheckbox]);
 
-  // Carga inicial
+  const navigate = useNavigate();
+  const [rol, setRol] = useState(null);
+
+  useEffect(() => {
+    const storedRol = localStorage.getItem("rol");
+    if (storedRol) setRol(parseInt(storedRol));
+  }, []);
+
   useEffect(() => { cargarProductos(); }, []);
 
-  // Reaplica filtros al cambiar base/búsqueda/filtros + resetea a página 1
   useEffect(() => {
     filtrarProductos(filtrosCheckbox);
-    setPage(1); // 🔸 reset paginado cuando cambian filtros/búsqueda
+    setPage(1);
   }, [productos, busqueda, filtrosCheckbox, filtrarProductos]);
 
-  // Asegura que la página no se pase del total
   useEffect(() => {
     if (page > totalPages) setPage(totalPages);
   }, [page, totalPages]);
 
-  // Items de la página actual
   const pageItems = useMemo(() => {
     const start = (page - 1) * perPage;
     return productosFiltrados.slice(start, start + perPage);
@@ -112,16 +130,20 @@ function Main() {
   }
 
   return (
-    <section className="main-container">{/* <- className */}
+    <section className="main-container">
       <Navbar
-      query={busqueda}
-      results={productosFiltrados.length}
-      onQueryChange={(valor) => setBusqueda(valor)}
-      logoSrc={logo} 
-     />
+        query={busqueda}
+        results={productosFiltrados.length}
+        onQueryChange={(valor) => setBusqueda(valor)}
+        logoSrc={logo} 
+        rol={rol}
+        onRegisterClick={() => setShowRegisterModal(true)}
+        onAdministrarClick={() => setShowAdminUsersModal(true)}
+      />
+      
 
       <section className="hero-layout">
-        <Sidebar className="Sidebar" categoriasFiltradas={filtrarProductos} />{/* <- className */}
+        <Sidebar className="Sidebar" categoriasFiltradas={filtrarProductos} />
 
         <main className="main">
           {loading ? (
@@ -138,7 +160,6 @@ function Main() {
             </div>
           ) : (
             <>
-              {/* Lista paginada */}
               <section className="product-list">
                 {pageItems.map((producto) => (
                   <ProductCard
@@ -155,11 +176,27 @@ function Main() {
                       brand: producto.brand,
                       manufacturer: producto.manufacturer
                     }}
+                    onProductClick={handleProductClick}
                   />
                 ))}
               </section>
 
-              {/* Controles de paginado */}
+              {/* MODALES */}
+              {showModal && selectedProduct && (
+                <ProductModal 
+                  producto={selectedProduct}
+                  onClose={() => setShowModal(false)}
+                />
+              )}
+
+                {showRegisterModal && (
+                 <RegisterModal onClose={() => setShowRegisterModal(false)} />
+                  )}
+
+                {showAdminUsersModal && (
+                 <AdminUsers onClose={() => setShowAdminUsersModal(false)} />
+           )}
+
               <div className="pagination">
                 <button onClick={() => setPage(1)} disabled={page === 1}>« Primero</button>
                 <button onClick={() => setPage(p => p - 1)} disabled={page === 1}>← Anterior</button>

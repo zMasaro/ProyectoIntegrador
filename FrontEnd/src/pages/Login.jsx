@@ -16,16 +16,16 @@ function Login() {
     e.preventDefault();
     setError("");
     try {
-      const response = await fetch("http://localhost:3002/api/login", {
+      const response = await fetch("http://localhost:3001/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include", // Para enviar cookies de sesión
         body: JSON.stringify({ email, password }),
       });
       const data = await response.json();
       if (response.ok) {
         // Login exitoso, mostrar mensaje personalizado
-        localStorage.setItem("rol", data.rol); // 👈 guardar rol
-        alert(`${data.message}, ${data.name}!`);
+        localStorage.setItem("rol", data.rol); // guardar el rol en localStorage
         navigate("/app"); // Redirigir a la aplicación principal
       } else {
         setError(data.message || "Error al iniciar sesión");
